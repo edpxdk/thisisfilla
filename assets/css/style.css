@@ -1,0 +1,1018 @@
+/* ==========================================================================
+   RESET & SYSTEM VARIABLES
+   ========================================================================== */
+:root {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #181818;
+  --text-main: #ffffff;
+  --text-muted: #b3b3b3;
+  --accent: #0e92c2;
+  --accent-hover: #0b7399;
+  --card-bg: #1e1e1e;
+  --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-family: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   REUSABLE UTILITIES & COMPONENTS
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  position: relative;
+}
+
+.padding {
+  padding: 100px 0;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--text-main);
+  border: 2px solid var(--accent);
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 2px solid var(--text-main);
+}
+
+.btn-outline:hover {
+  background-color: var(--text-main);
+  color: var(--bg-primary);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   STICKY NAVIGATION
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: var(--transition-smooth);
+  padding: 25px 0;
+}
+
+.navbar.scrolled {
+  background-color: rgba(15, 15, 15, 0.95);
+  padding: 15px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.nav-logo img {
+  display: block;
+  height: 30px;
+  width: auto;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: var(--transition-smooth);
+  position: relative;
+  padding: 5px 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-main);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: var(--transition-smooth);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.hamburger .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  transition: var(--transition-smooth);
+  background-color: var(--text-main);
+}
+
+/* ==========================================================================
+   HERO SECTION (WITH PARALLAX EFFECT)
+   ========================================================================== */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%; /* Leaves space for shifting frame in parallax */
+  background-image: url("https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=1920");
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  z-index: -2;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 15, 15, 0.4) 0%,
+    rgba(15, 15, 15, 0.9) 100%
+  );
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 0 24px;
+  z-index: 1;
+}
+
+.genre-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.band-name {
+  height: 150px;
+  background-image: url("../img/logo.PNG");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.tagline {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.hero-btns {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   ABOUT BAND
+   ========================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.about-text h3 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.about-text p {
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.about-meta {
+  background-color: var(--bg-secondary);
+  padding: 40px;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent);
+}
+
+.meta-item {
+  margin-bottom: 24px;
+}
+
+.meta-item:last-child {
+  margin-bottom: 0;
+}
+
+.meta-label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.meta-value {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   BAND MEMBERS
+   ========================================================================== */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.member-card {
+  background-color: var(--card-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.member-img-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 125%; /* 4:5 aspect ratio layout */
+  overflow: hidden;
+}
+
+.member-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+  filter: grayscale(100%);
+}
+
+.member-info {
+  padding: 24px;
+  text-align: center;
+}
+
+.member-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.member-role {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Hover States */
+.member-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(14, 146, 194, 0.2);
+}
+
+.member-card:hover .member-img {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   LATEST RELEASE & MUSIC SECTION
+   ========================================================================== */
+.latest-release-card {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 50px;
+  background-color: var(--bg-secondary);
+  padding: 40px;
+  border-radius: 8px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.release-artwork img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.release-badge {
+  display: inline-block;
+  background-color: rgba(14, 146, 194, 0.1);
+  color: var(--accent);
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  margin-bottom: 16px;
+  border: 1px solid var(--accent);
+}
+
+.release-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.release-date {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.release-desc {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.spotify-placeholder {
+  background-color: #000000;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #282828;
+}
+
+.spotify-icon {
+  font-size: 2rem;
+  color: #1db954;
+  margin-bottom: 10px;
+}
+
+.spotify-placeholder p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.discography-list h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.disco-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  padding: 16px 24px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  transition: var(--transition-smooth);
+}
+
+.disco-item:hover {
+  background-color: var(--card-bg);
+  transform: translateX(5px);
+}
+
+.disco-info h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.disco-info p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.disco-play {
+  color: var(--text-main);
+  font-size: 1.1rem;
+  transition: var(--transition-smooth);
+}
+
+.disco-play:hover {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   GALLERY SECTION
+   ========================================================================== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.gallery-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 15, 15, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.gallery-hover i {
+  color: var(--text-main);
+  font-size: 1.5rem;
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.08);
+}
+
+.gallery-item:hover .gallery-hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   UPCOMING SHOWS
+   ========================================================================== */
+.shows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.show-card {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  padding: 24px 40px;
+  border-radius: 6px;
+  transition: var(--transition-smooth);
+}
+
+.show-card:hover {
+  background-color: var(--card-bg);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.show-date-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  min-width: 80px;
+  height: 80px;
+  margin-right: 40px;
+}
+
+.show-day {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.show-month {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.show-details {
+  flex-grow: 1;
+}
+
+.show-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.show-venue {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.show-venue i {
+  color: var(--accent);
+  margin-right: 6px;
+}
+
+.ticket-status.sold-out {
+  display: inline-block;
+  padding: 8px 18px;
+  background-color: transparent;
+  border: 2px solid #333;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   CONTACT SECTION
+   ========================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+}
+
+.contact-info h3 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-link-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: var(--transition-smooth);
+}
+
+.contact-link-item i {
+  font-size: 1.4rem;
+  color: var(--accent);
+  width: 30px;
+}
+
+.contact-link-item:hover {
+  color: var(--accent);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: var(--bg-primary);
+  border: 1px solid #333;
+  color: var(--text-main);
+  padding: 14px;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+  padding: 60px 0;
+  border-top: 1px solid #1e1e1e;
+  text-align: center;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.footer-socials a {
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  transition: var(--transition-smooth);
+}
+
+.footer-socials a:hover {
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.copyright {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.designer {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   BACK TO TOP BUTTON
+   ========================================================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: -60px; /* Hidden offscreen by default */
+  background-color: var(--accent);
+  color: var(--text-main);
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+  z-index: 99;
+}
+
+.back-to-top.show {
+  right: 30px;
+}
+
+.back-to-top:hover {
+  background-color: var(--accent-hover);
+}
+
+/* ==========================================================================
+   LIGHTBOX MODAL STRUCTURE
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.95);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  padding: 40px;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+  transform: scale(0.95);
+  transition: transform 0.4s ease;
+  border-radius: 4px;
+}
+
+.lightbox.active .lightbox-content {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: var(--text-main);
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.lightbox-close:hover {
+  color: var(--accent);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 16px;
+  transition: var(--transition-smooth);
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  color: var(--accent);
+}
+
+.lightbox-prev {
+  left: 30px;
+}
+.lightbox-next {
+  right: 30px;
+}
+
+/* ==========================================================================
+   ANIMATION INTERACTION (SCROLL REVEAL EFFECTS)
+   ========================================================================== */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .band-name {
+    font-size: 4.5rem;
+  }
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .latest-release-card {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+  .padding {
+    padding: 70px 0;
+  }
+
+  /* Responsive Navigation Layout */
+  .hamburger {
+    display: block;
+  }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    transition: 0.4s ease;
+    z-index: -1;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+  .nav-link {
+    font-size: 1.2rem;
+  }
+
+  /* Columns Reset */
+  .about-grid,
+  .music-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .band-name {
+    font-size: 3.5rem;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .show-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+  }
+  .show-date-box {
+    margin-right: 0;
+  }
+  .show-action {
+    width: 100%;
+  }
+
+  .lightbox {
+    padding: 20px;
+  }
+  .lightbox-prev {
+    left: 10px;
+  }
+  .lightbox-next {
+    right: 10px;
+  }
+  .lightbox-close {
+    top: 15px;
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .band-name {
+    font-size: 2.8rem;
+  }
+  .members-grid,
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
